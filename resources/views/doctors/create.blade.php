@@ -27,7 +27,7 @@
                         id="experience">
                     <input placeholder="Rating" type="number" min="0" max="5" step=0.1 name="rating" class="form-control mt-3" id="rating">
 
-                    <input placeholder="Appointment Number" type="tel" pattern="^\+\d{1,3}\s\d{3}\s\d{3}\s\d{4}$" maxlength="17" name="appointmentNumber"
+                    <input placeholder="Appointment Number" type="tel" maxlength="14" name="appointmentNumber"
                         class="form-control mt-3" id="appointmentNumber" >
 
                     <input placeholder="Location" type="text" name="location" class="form-control mt-3" id="location">
@@ -52,48 +52,24 @@ imagePicker.addEventListener('change', (event) => {
     };
 });
 
-
-const appointmentNumberField = document.getElementById('appointmentNumber');
-const defaultCountryCode = '+880';
-// Add default country code when the field is focused
-// appointmentNumberField.addEventListener('focus', () => {
-//   if (!appointmentNumberField.value.startsWith(defaultCountryCode)) {
-//     appointmentNumberField.value = defaultCountryCode + appointmentNumberField.value;
-//   }
-// });
-
-// Format the input according to the pattern after every input
-appointmentNumberField.addEventListener('input', () => {
-
-    let input = appointmentNumberField.value;
-  if (!input.startsWith(defaultCountryCode)) {
-    input = defaultCountryCode + input;
-  }
-
-const formattedNumber = formatPhoneNumber(input);
-  appointmentNumberField.value = formattedNumber;
-  
+const input = document.querySelector('#rating');
+input.addEventListener('change', e => {
+  e.currentTarget.value = parseFloat(e.currentTarget.value).toFixed(1)
 });
 
-function formatPhoneNumber(phoneNumber) {
-  const countryCode = '+880';
-  let formattedNumber = '';
+const appointmentNumberField = document.getElementById('appointmentNumber');
+const defaultCountryCode = "+880";
 
- if(phoneNumber.length === 4){
-    formattedNumber = `${phoneNumber}-`;
+appointmentNumberField.addEventListener('focus', () => {
+  if (!appointmentNumberField.value.startsWith(defaultCountryCode)) {
+    appointmentNumberField.value = defaultCountryCode + appointmentNumberField.value;
   }
-  else if(phoneNumber.length === 8){
-    formattedNumber = `${phoneNumber}/`;
-  }
-  else if(phoneNumber.length === 12){
-    formattedNumber = `${phoneNumber}-`;
-  }
-  else{
-    formattedNumber = phoneNumber;
-  }   
-  return formattedNumber;
+});
 
-}
+appointmentNumberField.addEventListener('input', () => {
+  const input = appointmentNumberField.value;
+  appointmentNumberField.value = input;
+});
 
 </script>
 @endsection

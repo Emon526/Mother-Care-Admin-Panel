@@ -32,7 +32,7 @@
                     <input placeholder="Rating" type="number" min="0" max="5" step=0.1 name="rating" class="form-control mt-3" id="rating"
                         value="{{$doctor->rating}}">
 
-                    <input placeholder="Appointment Number" type="tel"  pattern="^\+\d{1,3}\s\d{3}\s\d{3}\s\d{4}$" maxlength="17" name="appointmentNumber"
+                    <input placeholder="Appointment Number" type="tel"name="appointmentNumber" maxlength="14"
                         class="form-control mt-3" id="appointmentNumber" value="{{$doctor->appointmentNumber}}">
 
                     <input placeholder="Location" type="text" name="location" class="form-control mt-3" id="location"
@@ -57,9 +57,23 @@ imagePicker.addEventListener('change', (event) => {
     
 });
 
-const input = document.querySelector('#review');
+const input = document.querySelector('#rating');
 input.addEventListener('change', e => {
   e.currentTarget.value = parseFloat(e.currentTarget.value).toFixed(1)
+});
+
+const appointmentNumberField = document.getElementById('appointmentNumber');
+const defaultCountryCode = "+880";
+
+appointmentNumberField.addEventListener('focus', () => {
+  if (!appointmentNumberField.value.startsWith(defaultCountryCode)) {
+    appointmentNumberField.value = defaultCountryCode + appointmentNumberField.value;
+  }
+});
+
+appointmentNumberField.addEventListener('input', () => {
+  const input = appointmentNumberField.value;
+  appointmentNumberField.value = input;
 });
 
 </script>
