@@ -12,7 +12,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Copy the source code to the working directory
 COPY . .
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
+RUN set -eux
 # Install project dependencies using Composer
 RUN composer install --prefer-dist --no-interaction
 
