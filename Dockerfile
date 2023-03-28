@@ -1,34 +1,37 @@
-FROM php:8.0.2-apache
+# Set the base image
+FROM php:8.2-apache
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    libzip-dev \
-    unzip \
-    && docker-php-ext-install zip
-
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql
+# Install dependencies
+RUN apt-get update && \
+    apt-get install -y git unzip libicu-dev && \
+    docker-php-ext-install pdo_mysql intl && \
+    pecl install mongodb && \
+    docker-php-ext-enable mongodb
 
 # Enable Apache modules
 RUN a2enmod rewrite
 
-# Set up a working directory
+# Copy files and set working directory
+COPY . /var/www/html
 WORKDIR /var/www/html
 
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Install composer dependencies
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
+    composer install --no-dev --prefer-dist --no-scripts --no-progress --no-suggest
 
-# Copy and install the project dependencies
-COPY . /var/www/html/
-RUN composer install --no-interaction --optimize-autoloader
+# Install node dependencies and build frontend assets
+RUN apt-get install -y npm && \
+    npm install && \
+    npm run production
 
-# Set up the required environment variables
-ENV APP_ENV=production
-ENV APP_KEY=base64:RANDOMLY_GENERATED_KEY_HERE
+# Copy .env file
+COPY .env /var/www/html/.env
 
-# Expose the container port
-EXPOSE 80
+# Set file permissions
+RUN chown -R www-data:www-data /var/www/html/storage && \
+    chown -R www-data:www-data /var/www/html/bootstrap/cache && \
+    chmod -R 755 /var/www/html/storage && \
+    chmod -R 755 /var/www/html/bootstrap/cache
 
-# Start the Apache server
-CMD ["apache2-foreground"]
+# Start Apache
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
