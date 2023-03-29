@@ -1,5 +1,5 @@
 # Base image
-FROM php:8.2-apache
+FROM php:8.0-apache
 
 # Update and install necessary packages
 RUN apt-get update && apt-get install -y \
@@ -16,6 +16,12 @@ COPY . /var/www/html
 
 # Copy .env file into container
 COPY .env /var/www/html
+
+# Fix permissions for storage and bootstrap/cache directories
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Fix permissions for public/hot directory
+RUN chown -R www-data:www-data /var/www/html/public/hot
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
