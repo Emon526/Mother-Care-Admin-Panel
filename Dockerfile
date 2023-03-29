@@ -1,5 +1,5 @@
 # Base image
-FROM php:8.0-apache
+FROM php:8.2-apache
 
 # Update and install necessary packages
 RUN apt-get update && apt-get install -y \
