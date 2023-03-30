@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - "80:9000"
+    volumes:
+      - .:/var/www/html
+    environment:
+      APP_ENV: ${APP_ENV}
+      APP_DEBUG: ${APP_DEBUG}
+      APP_KEY: ${APP_KEY}
+      APP_URL: ${APP_URL}
+      DB_CONNECTION: mongodb
+      DB_HOST: ${MONGODB_HOST}
+      DB_PORT: ${MONGODB_PORT}
+      DB_DATABASE: ${MONGODB_DATABASE}
+      DB_USERNAME: ${MONGODB_USERNAME}
+      DB_PASSWORD: ${MONGODB_PASSWORD}
