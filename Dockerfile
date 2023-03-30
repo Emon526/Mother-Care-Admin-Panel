@@ -1,4 +1,4 @@
-FROM php:8.2-fpm
+FROM php:8.2-cli
 
 RUN apt-get update && \
     apt-get install -y \
@@ -23,9 +23,7 @@ RUN chown -R www-data:www-data \
         /var/www/html/bootstrap/cache
 
 RUN composer install
-RUN apt-get install -y npm
-RUN npm install
 
-RUN php artisan config:cache
+EXPOSE 8000
 
-CMD ["php-fpm", "-F"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
