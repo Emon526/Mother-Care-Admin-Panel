@@ -28,6 +28,7 @@ RUN chown -R www-data:www-data \
 RUN composer install
 
 RUN npm install
+RUN npm run build
 
 EXPOSE 8000
 
