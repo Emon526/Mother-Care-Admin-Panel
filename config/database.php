@@ -101,6 +101,8 @@ return [
             'password' => env('DB_PASSWORD', 'secret'),
             'options' => [
                 'appname' => 'homestead',
+                'ssl' => true,
+                'ssl_verify' => true,
             ],
         ],
 
