@@ -14,6 +14,9 @@ RUN docker-php-ext-install pdo_mysql zip
 
 RUN pecl install mongodb && docker-php-ext-enable mongodb
 
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
+
 WORKDIR /var/www/html
 
 COPY . .
@@ -23,6 +26,8 @@ RUN chown -R www-data:www-data \
         /var/www/html/bootstrap/cache
 
 RUN composer install
+
+RUN npm install
 
 EXPOSE 8000
 
