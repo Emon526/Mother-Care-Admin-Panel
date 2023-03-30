@@ -3,9 +3,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "start": "php artisan serve",
-        "docker-build": "docker build -t app-name .",
-        "docker-run": "docker run -p 8000:8000 app-name"
+        "start": "php artisan serve"
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",
