@@ -23,6 +23,7 @@ RUN chown -R www-data:www-data \
         /var/www/html/bootstrap/cache
 
 RUN composer install
+RUN npm install
 
 RUN php artisan config:cache
 
