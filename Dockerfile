@@ -19,7 +19,8 @@ COPY . .
 RUN chown -R www-data:www-data \
         /var/www/html/storage \
         /var/www/html/bootstrap/cache
+RUN composer install
 
 RUN php artisan config:cache
 
-CMD php-fpm
+CMD ["php-fpm", "-F"]
