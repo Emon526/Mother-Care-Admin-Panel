@@ -2,7 +2,8 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
+        "build2": "vite build",
+        "build": "bash install-composer.sh",
         "start": "php artisan serve"
     },
     "devDependencies": {
