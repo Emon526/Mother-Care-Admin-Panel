@@ -101,6 +101,9 @@ return [
             'password' => env('DB_PASSWORD', 'secret'),
             'options' => [
                 'appname' => 'homestead',
+                'ssl'           => env('MONGODB_SSL', false),
+                'ssl_cafile'    => env('MONGODB_SSL_CA_FILE', null),
+                'ssl_allow_self_signed' => true
             ],
         ],
 
