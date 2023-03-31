@@ -30,7 +30,7 @@ COPY app app/
 RUN composer install --no-dev --no-scripts --no-autoloader
 
 # Install JavaScript dependencies
-COPY package.json package-lock.json webpack.mix.js ./
+COPY package.json package-lock.json vite.config.js ./
 RUN npm ci --production
 
 # Build assets
