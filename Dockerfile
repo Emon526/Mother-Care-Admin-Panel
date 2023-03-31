@@ -32,6 +32,8 @@ RUN composer install --no-dev --no-scripts --no-autoloader
 
 RUN composer dump-autoload --no-dev --optimize
 
+RUN php artisan optimize
+
 RUN npm install && npm run build
 
 RUN mkdir -p public/build && chown -R www-data:www-data public

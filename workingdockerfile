@@ -28,7 +28,9 @@ RUN chown -R www-data:www-data \
         /var/www/html/bootstrap/cache \
         /var/www/html/public
 
-RUN composer install
+RUN composer install --no-dev --no-scripts --no-autoloader
+
+RUN composer dump-autoload --no-dev --optimize
 
 RUN npm install && npm run build
 
