@@ -7,14 +7,15 @@ RUN apt-get update && \
         unzip \
         git \
         curl \
-        openssl \
-        libssl-dev
+        libssl-dev \
+        openssl
 
 RUN docker-php-ext-install pdo_mysql zip
 
 RUN pecl install mongodb && docker-php-ext-enable mongodb
 
-RUN docker-php-ext-install openssl
+RUN apt-get update && apt-get install -y openssl && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-install openssl
 
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get install -y nodejs
