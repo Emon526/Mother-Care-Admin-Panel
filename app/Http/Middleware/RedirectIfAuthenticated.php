@@ -27,6 +27,10 @@ class RedirectIfAuthenticated
             }
         }
 
+        if (!$request->secure() && env('APP_ENV') !== 'local') {
+            return redirect()->secure($request->getRequestUri());
+        }
+
         return $next($request);
     }
 }
