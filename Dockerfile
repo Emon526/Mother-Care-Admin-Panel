@@ -7,13 +7,14 @@ RUN apt-get update && \
         unzip \
         git \
         curl \
-        openssl
+        openssl \
+        libssl-dev
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-RUN docker-php-ext-install pdo_mysql zip openssl
+RUN docker-php-ext-install pdo_mysql zip
 
 RUN pecl install mongodb && docker-php-ext-enable mongodb
+
+RUN docker-php-ext-install openssl
 
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get install -y nodejs
@@ -26,6 +27,8 @@ RUN chown -R www-data:www-data \
         /var/www/html/storage \
         /var/www/html/bootstrap/cache \
         /var/www/html/public
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN composer install
 
