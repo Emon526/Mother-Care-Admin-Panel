@@ -8,7 +8,10 @@ RUN apt-get update && \
         git \
         curl \
         libssl-dev \
-        openssl
+        openssl \
+        apache2 \
+        && a2enmod ssl \
+        && a2ensite default-ssl
 
 RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
     -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=example.com" \
@@ -44,6 +47,9 @@ RUN npm install && npm run build
 
 RUN mkdir -p public/build && chown -R www-data:www-data public
 
+COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
+COPY ssl-config.conf /etc/apache2/sites-available/default-ssl.conf
+
 EXPOSE 443
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=443", "--cert=/etc/ssl/certs/ssl-cert.crt", "--key=/etc/ssl/private/ssl-cert.key"]
+CMD ["apache2ctl", "-D", "FOREGROUND"]
