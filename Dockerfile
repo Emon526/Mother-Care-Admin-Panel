@@ -41,8 +41,9 @@ RUN npm install && npm run build
 
 RUN mkdir -p public/build && chown -R www-data:www-data public
 
-RUN sed -i 's#http://#https://#g' /var/www/html/*.php
-RUN sed -i 's#http://#https://#g' /var/www/html/public/*.html
+RUN find /var/www/html -type f -name '*.php' -exec sed -i 's%http://%https://%g' {} +
+
+RUN find /var/www/html/public -type f -name '*.html' -exec sed -i 's%http://%https://%g' {} +
 
 EXPOSE 8000
 
