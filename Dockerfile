@@ -8,7 +8,8 @@ RUN apt-get update && \
         git \
         curl \
         libssl-dev \
-        openssl
+        openssl \
+        ca-certificates
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -39,6 +40,9 @@ RUN php artisan config:cache
 RUN npm install && npm run build
 
 RUN mkdir -p public/build && chown -R www-data:www-data public
+
+RUN sed -i 's#http://#https://#g' /var/www/html/*.php
+RUN sed -i 's#http://#https://#g' /var/www/html/public/*.html
 
 EXPOSE 8000
 
