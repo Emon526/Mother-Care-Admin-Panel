@@ -13,7 +13,7 @@ RUN apt-get update && \
 RUN mkdir -p /etc/apache2/ssl
 
 RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
-    -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=example.com" \
+    -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=https://dockertest-zloh.onrender.com" \
     -keyout /etc/apache2/ssl/apache.key -out /etc/apache2/ssl/apache.crt
 
 RUN chmod 400 /etc/apache2/ssl/apache.key
