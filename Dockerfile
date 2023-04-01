@@ -1,4 +1,4 @@
-FROM php:8.2-cli
+FROM php:8.2-apache
 
 RUN apt-get update && \
     apt-get install -y \
@@ -9,13 +9,15 @@ RUN apt-get update && \
         curl \
         libssl-dev \
         openssl \
-        apache2 \
         && a2enmod ssl \
-        && a2ensite default-ssl
-
-RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
-    -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=example.com" \
-    -keyout /etc/ssl/private/ssl-cert.key -out /etc/ssl/certs/ssl-cert.crt
+        && a2ensite default-ssl \
+        && sed -i 's/\/var\/www\/html/\/var\/www\/html\/public/g' /etc/apache2/sites-available/default-ssl.conf \
+        && sed -i '/<\/VirtualHost>/i DocumentRoot /var/www/html/public\nSSLCertificateFile /etc/ssl/certs/ssl-cert.crt\nSSLCertificateKeyFile /etc/ssl/private/ssl-cert.key' /etc/apache2/sites-available/default-ssl.conf \
+        && sed -i 's/80/443/g' /etc/apache2/sites-available/default-ssl.conf \
+        && sed -i 's/Listen 80/Listen 443/g' /etc/apache2/ports.conf \
+        && openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
+        -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=example.com" \
+        -keyout /etc/ssl/private/ssl-cert.key -out /etc/ssl/certs/ssl-cert.crt
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -47,9 +49,6 @@ RUN npm install && npm run build
 
 RUN mkdir -p public/build && chown -R www-data:www-data public
 
-COPY apache-config.conf /etc/apache2/sites-available/000-default.conf
-COPY ssl-config.conf /etc/apache2/sites-available/default-ssl.conf
-
 EXPOSE 443
 
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+CMD ["apache2-foreground"]
