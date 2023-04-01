@@ -13,11 +13,13 @@ RUN apt-get update && \
         && a2ensite default-ssl \
         && sed -i 's/\/var\/www\/html/\/var\/www\/html\/public/g' /etc/apache2/sites-available/default-ssl.conf \
         && sed -i '/<\/VirtualHost>/i DocumentRoot /var/www/html/public\nSSLCertificateFile /etc/ssl/certs/ssl-cert.crt\nSSLCertificateKeyFile /etc/ssl/private/ssl-cert.key' /etc/apache2/sites-available/default-ssl.conf \
-        && sed -i 's/80/443/g' /etc/apache2/sites-available/default-ssl.conf \
-        && sed -i 's/Listen 80/Listen 443/g' /etc/apache2/ports.conf \
+        && sed -i '/Listen 80/d' /etc/apache2/ports.conf \
         && openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
         -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=example.com" \
         -keyout /etc/ssl/private/ssl-cert.key -out /etc/ssl/certs/ssl-cert.crt
+
+COPY apache.conf /etc/apache2/conf-available/apache.conf
+RUN a2enconf apache
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
