@@ -9,7 +9,7 @@
 
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://dockertest-zloh.onrender.com/build/assets/app-67dcdfd2.css">
+
     <!-- Styles -->
     <style>
     /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
