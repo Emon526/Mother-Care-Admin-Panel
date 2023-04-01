@@ -46,4 +46,4 @@ RUN mkdir -p public/build && chown -R www-data:www-data public
 
 EXPOSE 443
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=443"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=443", "--cert=/etc/ssl/certs/ssl-cert.crt", "--key=/etc/ssl/private/ssl-cert.key"]
