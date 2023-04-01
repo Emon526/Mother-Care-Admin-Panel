@@ -10,17 +10,20 @@ RUN apt-get update && \
         libssl-dev \
         openssl
 
+# set ServerName directive globally to suppress warning
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 RUN mkdir -p /etc/apache2/ssl
 
 RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
-    -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=dockertest-zloh.onrender.com" \
+    -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=example.com" \
     -keyout /etc/apache2/ssl/apache.key -out /etc/apache2/ssl/apache.crt
 
 RUN chmod 400 /etc/apache2/ssl/apache.key
 
 RUN sed -i 's/\/etc\/ssl\/certs\/ssl-cert-snakeoil.pem/\/etc\/apache2\/ssl\/apache.crt/g' /etc/apache2/sites-available/default-ssl.conf && \
-    sed -i 's/\/etc\/ssl\/private\/ssl-cert-snakeoil.key/\/etc\/apache2\/ssl\/apache.key/g' /etc/apache2/sites-available/default-ssl.conf && \
-    sed -i 's/localhost/dockertest-zloh.onrender.com/g' /etc/apache2/sites-available/default-ssl.conf
+    sed -i 's/\/etc\/ssl\/private\/ssl-cert-snakeoil.key/\/etc\/apache2\/ssl\/apache.key/g' /etc/apache2/sites-available/default-ssl.conf
+
 
 # enable SSL module and set the SSL certificate and key
 RUN a2enmod ssl && \
