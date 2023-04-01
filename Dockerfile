@@ -10,9 +10,6 @@ RUN apt-get update && \
         libssl-dev \
         openssl
 
-# set ServerName directive globally to suppress warning
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-
 RUN mkdir -p /etc/apache2/ssl
 
 RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
@@ -24,6 +21,8 @@ RUN chmod 400 /etc/apache2/ssl/apache.key
 RUN sed -i 's/\/etc\/ssl\/certs\/ssl-cert-snakeoil.pem/\/etc\/apache2\/ssl\/apache.crt/g' /etc/apache2/sites-available/default-ssl.conf && \
     sed -i 's/\/etc\/ssl\/private\/ssl-cert-snakeoil.key/\/etc\/apache2\/ssl\/apache.key/g' /etc/apache2/sites-available/default-ssl.conf
 
+# Fix "Could not reliably determine the server's fully qualified domain name" warning
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # enable SSL module and set the SSL certificate and key
 RUN a2enmod ssl && \
@@ -54,6 +53,9 @@ RUN chown -R www-data:www-data \
 RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs
 
 RUN composer dump-autoload --optimize
+
+# Set the DirectoryIndex to index.php
+RUN echo "DirectoryIndex index.php" >> /etc/apache2/mods-enabled/dir.conf
 
 RUN php artisan optimize
 
