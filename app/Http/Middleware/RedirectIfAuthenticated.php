@@ -26,9 +26,6 @@ class RedirectIfAuthenticated
                 return redirect(RouteServiceProvider::HOME);
             }
         }
-        if (!$request->isSecure()) {
-            return redirect()->secure($request->getRequestUri());
-        }
 
         return $next($request);
     }
