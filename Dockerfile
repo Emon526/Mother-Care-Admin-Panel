@@ -46,13 +46,7 @@ WORKDIR /var/www/html
 
 COPY . .
 
-RUN chown -R www-data:www-data \
-        /var/www/html/storage \
-        /var/www/html/bootstrap/cache \
-        /var/www/html/public \
-        /var/www/html/vendor
-
-RUN chmod -R 775 \
+RUN mkdir -p /var/www/html/vendor && chown -R www-data:www-data \
         /var/www/html/storage \
         /var/www/html/bootstrap/cache \
         /var/www/html/public \
