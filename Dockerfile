@@ -32,9 +32,9 @@ RUN chown -R www-data:www-data \
         /var/www/html/bootstrap/cache \
         /var/www/html/public
 
-RUN composer install --no-dev --no-scripts --no-autoloader
+RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs
 
-RUN composer dump-autoload --no-dev --optimize
+RUN composer dump-autoload --optimize
 
 RUN php artisan optimize
 
@@ -46,4 +46,4 @@ RUN mkdir -p public/build && chown -R www-data:www-data public
 
 EXPOSE 443
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=443", "--env=production", "--no-dev", "--no-reload"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=443"]
