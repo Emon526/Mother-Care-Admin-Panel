@@ -18,8 +18,8 @@ RUN apt-get update && \
         -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=example.com" \
         -keyout /etc/ssl/private/ssl-cert.key -out /etc/ssl/certs/ssl-cert.crt
 
-COPY apache.conf /etc/apache2/conf-available/apache.conf
-RUN a2enconf apache
+COPY apache.conf /etc/apache2/sites-available/apache.conf
+RUN a2ensite apache && a2dissite 000-default
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
