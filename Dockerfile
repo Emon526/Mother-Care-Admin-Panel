@@ -8,7 +8,8 @@ RUN apt-get update && \
         git \
         curl \
         libssl-dev \
-        openssl
+        openssl \
+        ca-certificates
 
 RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
     -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=example.com" \
