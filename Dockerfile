@@ -40,7 +40,9 @@ RUN php artisan optimize
 
 RUN php artisan config:cache
 
-RUN npm install && npm run build -- --https
+RUN npm install
+
+RUN npm run build -- --https
 
 RUN mkdir -p public/build && chown -R www-data:www-data public
 
