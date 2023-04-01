@@ -12,7 +12,13 @@ RUN apt-get update && \
 
 RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
     -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=example.com" \
-    -keyout /etc/ssl/private/ssl-cert.key -out /etc/ssl/certs/ssl-cert.crt
+    -keyout /etc/apache2/ssl/apache.key -out /etc/apache2/ssl/apache.crt
+
+RUN chmod 400 /etc/apache2/ssl/apache.key
+
+RUN sed -i 's/\/etc\/ssl\/certs\/ssl-cert-snakeoil.pem/\/etc\/apache2\/ssl\/apache.crt/g' /etc/apache2/sites-available/default-ssl.conf && \
+    sed -i 's/\/etc\/ssl\/private\/ssl-cert-snakeoil.key/\/etc\/apache2\/ssl\/apache.key/g' /etc/apache2/sites-available/default-ssl.conf
+
 
 # enable SSL module and set the SSL certificate and key
 RUN a2enmod ssl && \
