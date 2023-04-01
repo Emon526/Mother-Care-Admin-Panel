@@ -8,8 +8,11 @@ RUN apt-get update && \
         git \
         curl \
         libssl-dev \
-        openssl \
-        ca-certificates
+        openssl
+
+RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
+    -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=example.com" \
+    -keyout /etc/ssl/private/ssl-cert.key -out /etc/ssl/certs/ssl-cert.crt
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -41,10 +44,6 @@ RUN npm install && npm run build
 
 RUN mkdir -p public/build && chown -R www-data:www-data public
 
-RUN find /var/www/html -type f -name '*.php' -exec sed -i 's%http://%https://%g' {} +
+EXPOSE 443
 
-RUN find /var/www/html/public -type f -name '*.html' -exec sed -i 's%http://%https://%g' {} +
-
-EXPOSE 8000
-
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=443", "--force-https"]
