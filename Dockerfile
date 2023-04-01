@@ -8,8 +8,7 @@ RUN apt-get update && \
         git \
         curl \
         libssl-dev \
-        openssl \
-        ca-certificates
+        openssl
 
 RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
     -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=example.com" \
@@ -41,10 +40,10 @@ RUN php artisan optimize
 
 RUN php artisan config:cache
 
-RUN npm install && npm run build
+RUN npm install && npm run build -- --https
 
 RUN mkdir -p public/build && chown -R www-data:www-data public
 
 EXPOSE 443
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=443"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=443", "--env=production"]
