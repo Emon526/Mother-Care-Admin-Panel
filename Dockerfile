@@ -1,4 +1,4 @@
-FROM php:8.2-cli
+FROM php:8.2-apache
 
 RUN apt-get update && \
     apt-get install -y \
@@ -13,6 +13,14 @@ RUN apt-get update && \
 RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
     -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=example.com" \
     -keyout /etc/ssl/private/ssl-cert.key -out /etc/ssl/certs/ssl-cert.crt
+
+# enable SSL module and set the SSL certificate and key
+RUN a2enmod ssl && \
+    a2ensite default-ssl && \
+    sed -i '/<VirtualHost/a SSLEngine on\nSSLCertificateFile /etc/ssl/certs/ssl-cert.crt\nSSLCertificateKeyFile /etc/ssl/private/ssl-cert.key' /etc/apache2/sites-available/default-ssl.conf
+
+# expose both HTTP and HTTPS ports
+EXPOSE 80 443
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -40,12 +48,8 @@ RUN php artisan optimize
 
 RUN php artisan config:cache
 
-RUN npm install
-
-RUN npm run build -- --https
+RUN npm install && npm run build
 
 RUN mkdir -p public/build && chown -R www-data:www-data public
 
-EXPOSE 443
-
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=443", "--env=production"]
+CMD ["apache2-foreground"]
