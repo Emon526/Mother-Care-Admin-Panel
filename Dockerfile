@@ -11,12 +11,14 @@ RUN apt-get update && \
         libssl-dev \
         openssl
 
+# Install SSL certificates
 RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
     -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=example.com" \
     -keyout /etc/ssl/private/ssl-cert.key -out /etc/ssl/certs/ssl-cert.crt
 
-COPY ssl.conf /etc/apache2/conf-available/ssl.conf
-RUN a2enmod ssl && a2enconf ssl
+# Enable SSL module and configure virtual host
+RUN a2enmod ssl
+COPY apache/000-default.conf /etc/apache2/sites-available/
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql zip
