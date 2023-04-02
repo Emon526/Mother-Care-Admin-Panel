@@ -13,7 +13,7 @@ RUN apt-get update && \
 
 # Install SSL certificates
 RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
-    -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=example.com" \
+    -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=dockertest-zloh.onrender.com" \
     -keyout /etc/ssl/private/ssl-cert.key -out /etc/ssl/certs/ssl-cert.crt
 
 # Enable SSL module and configure virtual host
