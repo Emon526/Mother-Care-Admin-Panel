@@ -4,7 +4,8 @@ services:
   app:
     build: .
     ports:
-      - "80:9000"
+      - "80:9000" # HTTP
+      - "443:9000" # HTTPS
     volumes:
       - .:/var/www/html
     environment:

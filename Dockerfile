@@ -1,67 +1,36 @@
-FROM php:8.2-apache
-
-RUN apt-get update && \
-    apt-get install -y \
-        libzip-dev \
-        zip \
-        unzip \
-        git \
-        curl \
-        libssl-dev \
-        openssl
-
-# set ServerName directive globally to suppress warning
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-
-RUN mkdir -p /etc/apache2/ssl
-
-RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
-    -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=example.com" \
-    -keyout /etc/apache2/ssl/apache.key -out /etc/apache2/ssl/apache.crt
-
-RUN chmod 400 /etc/apache2/ssl/apache.key
-
-RUN sed -i 's/\/etc\/ssl\/certs\/ssl-cert-snakeoil.pem/\/etc\/apache2\/ssl\/apache.crt/g' /etc/apache2/sites-available/default-ssl.conf && \
-    sed -i 's/\/etc\/ssl\/private\/ssl-cert-snakeoil.key/\/etc\/apache2\/ssl\/apache.key/g' /etc/apache2/sites-available/default-ssl.conf
-
-
-# enable SSL module and set the SSL certificate and key
-RUN a2enmod ssl && \
-    a2ensite default-ssl && \
-    sed -i '/<VirtualHost/a SSLEngine on\nSSLCertificateFile /etc/apache2/ssl/apache.crt\nSSLCertificateKeyFile /etc/apache2/ssl/apache.key' /etc/apache2/sites-available/default-ssl.conf
-
-# expose both HTTP and HTTPS ports
-EXPOSE 80 443
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-RUN docker-php-ext-install pdo_mysql zip
-
-RUN pecl install mongodb && docker-php-ext-enable mongodb
-
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt-get install -y nodejs
+FROM php:8.2-fpm
 
 WORKDIR /var/www/html
 
-COPY . .
+RUN apt-get update && apt-get install -y \
+        libzip-dev \
+        libonig-dev \
+        libpng-dev \
+        libjpeg-dev \
+        libfreetype6-dev \
+        libssl-dev \
+        zlib1g-dev \
+        unzip \
+        git \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd zip pdo pdo_mysql \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug
 
-RUN mkdir -p /var/www/html/vendor && chown -R www-data:www-data \
-        /var/www/html/storage \
-        /var/www/html/bootstrap/cache \
-        /var/www/html/public \
-        /var/www/html/vendor
+COPY --chown=www-data:www-data . .
 
-RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && composer install --no-dev --optimize-autoloader \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN composer dump-autoload --optimize
+COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
+COPY .docker/ssl/server.crt /etc/ssl/certs/server.crt
+COPY .docker/ssl/server.key /etc/ssl/private/server.key
 
-RUN php artisan optimize
+RUN a2enmod rewrite \
+    && a2enmod ssl \
+    && service apache2 restart
 
-RUN php artisan config:cache
-
-RUN npm install && npm run build
-
-RUN mkdir -p public/build && chown -R www-data:www-data public
+EXPOSE 80 443
 
 CMD ["apache2-foreground"]
