@@ -1,4 +1,6 @@
-FROM php:8.2-cli
+FROM php:8.2-apache
+
+USER root
 
 RUN apt-get update && \
     apt-get install -y \
@@ -44,6 +46,4 @@ RUN npm install && npm run build
 
 RUN mkdir -p public/build && chown -R www-data:www-data public
 
-EXPOSE 443
-
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=443"]
+CMD ["apache2-foreground"]
