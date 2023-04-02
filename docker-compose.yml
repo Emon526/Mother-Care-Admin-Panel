@@ -5,6 +5,7 @@ services:
     build: .
     ports:
       - "443:443" # HTTPS
+      - "80:80" # HTTP
     volumes:
       - .:/var/www/html
     environment:
