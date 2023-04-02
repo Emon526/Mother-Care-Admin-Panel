@@ -10,7 +10,8 @@ RUN apt-get update && \
         curl \
         libssl-dev \
         openssl
-
+# set ServerName directive globally to suppress warning
+RUN echo "ServerName dockertest-zloh.onrender.com" >> /etc/apache2/apache2.conf
 # Install SSL certificates
 RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
     -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=dockertest-zloh.onrender.com" \
