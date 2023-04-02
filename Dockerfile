@@ -32,7 +32,11 @@ COPY . .
 RUN chown -R www-data:www-data \
         /var/www/html/storage \
         /var/www/html/bootstrap/cache \
-        /var/www/html/public
+        /var/www/html/public \
+        /var/www/html/vendor \
+        /var/www/html/node_modules \
+        /var/www/html/package-lock.json \
+        /var/www/html/package.json
 
 RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs
 
