@@ -19,6 +19,9 @@ RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
 
 # Enable SSL module and configure virtual host
 RUN a2enmod ssl
+# Restart Apache service
+RUN service apache2 restart
+
 # Redirect all HTTP requests to HTTPS
 RUN echo "Redirect permanent / https://dockertest-zloh.onrender.com/" >> /etc/apache2/sites-available/000-default.conf
 

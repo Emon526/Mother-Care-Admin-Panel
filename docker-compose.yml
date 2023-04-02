@@ -11,7 +11,7 @@ services:
       APP_ENV: ${APP_ENV}
       APP_DEBUG: ${APP_DEBUG}
       APP_KEY: ${APP_KEY}
-      APP_URL: ${APP_URL}
+      APP_SECURE_URL: https://dockertest-zloh.onrender.com
       DB_CONNECTION: ${DB_CONNECTION}
       DB_HOST: ${DB_DSN}
       DB_PORT: ${DB_PORT}
