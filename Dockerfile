@@ -1,4 +1,4 @@
-FROM php:8.2-cli
+FROM php:8.2-apache
 
 RUN apt-get update && \
     apt-get install -y \
@@ -8,7 +8,8 @@ RUN apt-get update && \
         git \
         curl \
         libssl-dev \
-        openssl
+        openssl \
+        libapache2-mod-php
 
 RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
     -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=example.com" \
@@ -46,4 +47,4 @@ RUN mkdir -p public/build && chown -R www-data:www-data public
 
 EXPOSE 443
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=443"]
+CMD ["apache2-foreground"]
