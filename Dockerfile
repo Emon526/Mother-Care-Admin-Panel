@@ -17,7 +17,7 @@ RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
     -keyout /etc/ssl/private/ssl-cert.key -out /etc/ssl/certs/ssl-cert.crt
 
 # Enable SSL module and configure virtual host
-RUN a2enmod ssl
+RUN a2enmod ssl && service apache2 restart
 COPY apache/000-default.conf /etc/apache2/sites-available/
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 # Install PHP extensions
