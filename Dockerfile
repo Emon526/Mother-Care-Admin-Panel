@@ -52,5 +52,5 @@ RUN npm install && npm run build
 
 # Create directory for compiled assets and set file permissions
 RUN mkdir -p public/build && chown -R www-data:www-data public
-
+EXPOSE 443
 CMD ["apache2-foreground"]
