@@ -10,9 +10,6 @@ RUN apt-get update && \
         libssl-dev \
         openssl
 
-# set ServerName directive globally to suppress warning
-RUN echo "ServerName localhost" > /etc/apache2/conf-available/servername.conf && \
-    a2enconf servername
 
 RUN mkdir -p /etc/apache2/ssl
 
