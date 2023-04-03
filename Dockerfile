@@ -5,7 +5,9 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     unzip \
-    && docker-php-ext-install zip pdo pdo_mysql mongodb
+    && pecl install mongodb \
+    && docker-php-ext-enable mongodb \
+    && docker-php-ext-install zip pdo pdo_mysql
 
 # Set the working directory
 WORKDIR /var/www/html
