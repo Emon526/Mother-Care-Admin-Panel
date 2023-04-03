@@ -30,13 +30,17 @@ WORKDIR /var/www/html
 COPY . .
 
 # Install dependencies
-RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs && \
-    chown -R www-data:www-data /var/www/html && \
+# RUN composer install --no-dev --no-scripts --no-autoloader --ignore-platform-reqs
+RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs
+
+# RUN npm install --only=production && npm run build
+RUN npm install && npm run build
+
+RUN composer dump-autoload --no-dev --optimize
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 775 storage bootstrap/cache && \
-    chmod 777 -R storage/logs && \
-    npm install && \
-    npm run build && \
-    composer dump-autoload --no-dev --optimize
+    chmod 777 -R storage/logs
 
 # Copy NGINX configuration file
 COPY nginx.conf /etc/nginx/conf.d/default.conf
