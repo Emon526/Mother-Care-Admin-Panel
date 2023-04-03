@@ -33,8 +33,10 @@ COPY . .
 # Install dependencies
 RUN composer install --no-dev --no-scripts --no-autoloader --ignore-platform-reqs && \
     npm install --only=production && \
-    npm run prod && \
     composer dump-autoload --no-dev --optimize
+
+# Build frontend assets
+RUN npm run build
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html && \
