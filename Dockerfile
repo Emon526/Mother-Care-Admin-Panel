@@ -33,11 +33,11 @@ COPY . .
 # RUN composer install --no-dev --no-scripts --no-autoloader --ignore-platform-reqs
 RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs
 
-# RUN npm install --only=production && npm run build
-# RUN npm install && npm run build 
-RUN npm install --unsafe-perm && npm run build --unsafe-perm
-
+# Set ownership of public/build directory to www-data
 RUN chown -R www-data:www-data /var/www/html/public/build
+
+# RUN npm install --only=production && npm run build
+RUN npm install && npm run build 
 
 RUN composer dump-autoload --no-dev --optimize
 
