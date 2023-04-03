@@ -34,7 +34,8 @@ COPY . .
 RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs
 
 # RUN npm install --only=production && npm run build
-RUN npm install && npm run build 
+# RUN npm install && npm run build 
+RUN npm install --unsafe-perm && npm run build --unsafe-perm
 
 RUN chown -R www-data:www-data /var/www/html/public/build
 
