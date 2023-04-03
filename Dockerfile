@@ -22,22 +22,19 @@ RUN docker-php-ext-install pdo_mysql zip opcache && \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install Node.js and npm
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt-get install -y nodejs && \
-    rm -rf /var/lib/apt/lists/*
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
 
 # Copy source code
 WORKDIR /var/www/html
 COPY . .
 
 # Install dependencies
-RUN composer install --no-dev --no-scripts --no-autoloader --ignore-platform-reqs && \
-    npm install --only=production && \
-    composer dump-autoload --no-dev --optimize
+RUN composer install --no-dev --no-scripts --no-autoloader --ignore-platform-reqs
 
-# Build frontend assets
-RUN npm run build
+RUN npm install --only=production && npm run build
 
+RUN composer dump-autoload --no-dev --optimize
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html && \
     chmod -R 775 storage bootstrap/cache && \
