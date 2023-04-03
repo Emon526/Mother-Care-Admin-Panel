@@ -29,21 +29,46 @@ RUN apt-get install -y nodejs
 WORKDIR /var/www/html
 COPY . .
 
-# Install dependencies
-# RUN composer install --no-dev --no-scripts --no-autoloader --ignore-platform-reqs
+# # Install dependencies
+# # RUN composer install --no-dev --no-scripts --no-autoloader --ignore-platform-reqs
+# RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs
+
+# # Set ownership of public/build directory to www-data
+# RUN chown -R www-data:www-data /var/www/html/public/build
+
+# # RUN npm install --only=production && npm run build
+# RUN npm install && npm run build 
+
+# RUN composer dump-autoload --no-dev --optimize
+
+# # Set permissions
+# RUN chmod -R 775 storage bootstrap/cache && \
+#     chmod 777 -R storage/logs
+
+
+
+
+#######
+
+
+RUN chown -R www-data:www-data \
+        /var/www/html/storage \
+        /var/www/html/bootstrap/cache \
+        /var/www/html/public
+
 RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs
 
-# Set ownership of public/build directory to www-data
-RUN chown -R www-data:www-data /var/www/html/public/build
+RUN composer dump-autoload --optimize
 
-# RUN npm install --only=production && npm run build
-RUN npm install && npm run build 
+RUN php artisan optimize
 
-RUN composer dump-autoload --no-dev --optimize
+RUN php artisan config:cache
 
-# Set permissions
-RUN chmod -R 775 storage bootstrap/cache && \
-    chmod 777 -R storage/logs
+RUN npm install && npm run build
+
+RUN mkdir -p public/build && chown -R www-data:www-data public
+######
+
 
 # Copy NGINX configuration file
 COPY nginx.conf /etc/nginx/conf.d/default.conf
