@@ -1,12 +1,12 @@
-version: '3'
+# version: '3'
 
-services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "443:443"
-    volumes:
-      - .:/var/www/html
-    command: ["php", "artisan", "serve", "--host=0.0.0.0", "--port=443"]
+# services:
+#   web:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     ports:
+#       - "443:443"
+#     volumes:
+#       - .:/var/www/html
+#     command: ["php", "artisan", "serve", "--host=0.0.0.0", "--port=443"]
