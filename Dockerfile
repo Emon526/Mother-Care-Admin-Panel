@@ -30,12 +30,12 @@ WORKDIR /var/www/html
 COPY . .
 
 # Install dependencies
-RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs && \
-    chown -R www-data:www-data /var/www/html && \
-    chmod -R 775 storage bootstrap/cache && \
-    chmod 777 -R storage/logs && \
-    npm install && \
-    npm run build && \
+RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs  \
+    chown -R www-data:www-data /var/www/html  \
+    chmod -R 775 storage bootstrap/cache \
+    chmod 777 -R storage/logs  \
+    npm install  \
+    npm run build  \
     composer dump-autoload --no-dev --optimize
 
 # Copy NGINX configuration file
