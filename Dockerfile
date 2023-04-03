@@ -30,9 +30,11 @@ WORKDIR /var/www/html
 COPY . .
 
 # Install dependencies
-RUN composer install --no-dev --no-scripts --no-autoloader --ignore-platform-reqs
+# RUN composer install --no-dev --no-scripts --no-autoloader --ignore-platform-reqs
+RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs
 
-RUN npm install --only=production && npm run build
+# RUN npm install --only=production && npm run build
+RUN npm install && npm run build
 
 RUN composer dump-autoload --no-dev --optimize
 # Set permissions
