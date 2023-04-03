@@ -1,20 +1,21 @@
-FROM richarvey/nginx-php-fpm:3.1.3
+FROM php:8.2-fpm
 
+# Install necessary extensions
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    zip \
+    unzip \
+    && docker-php-ext-install zip pdo pdo_mysql mongodb
+
+# Set the working directory
+WORKDIR /var/www/html
+
+# Copy the entire Laravel project to the working directory
 COPY . .
 
-# Image config
-ENV SKIP_COMPOSER 1
-ENV WEBROOT /var/www/html/public
-ENV PHP_ERRORS_STDERR 1
-ENV RUN_SCRIPTS 1
-ENV REAL_IP_HEADER 1
+# Install Composer dependencies
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer install --no-dev --no-scripts --prefer-dist --optimize-autoloader
 
-# Laravel config
-ENV APP_ENV production
-ENV APP_DEBUG false
-ENV LOG_CHANNEL stderr
-
-# Allow composer to run as root
-ENV COMPOSER_ALLOW_SUPERUSER 1
-
-CMD ["/start.sh"]
+# Copy the Nginx configuration file
+COPY nginx.conf /etc/nginx/conf.d/default.conf
