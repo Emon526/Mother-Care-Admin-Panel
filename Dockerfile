@@ -34,7 +34,6 @@ RUN chown -R www-data:www-data \
 
 RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs
 
-RUN composer dump-autoload --optimize
 
 RUN php artisan optimize
 
