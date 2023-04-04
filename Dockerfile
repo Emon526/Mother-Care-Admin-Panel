@@ -24,6 +24,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Install Node.js and npm
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get update && apt-get install -y nodejs
+
 # Copy source code
 WORKDIR /var/www/html
 COPY . .
@@ -31,6 +32,7 @@ COPY . .
 # Set ownership of public/build directory to www-data
 RUN mkdir -p public/build
 RUN chown -R www-data:www-data /var/www/html/public/build
+
 # Set permissions
 RUN chmod -R 775 storage bootstrap/cache && \
     chmod 777 -R storage/logs
@@ -59,5 +61,5 @@ EXPOSE 80
 # CMD systemctl start php8.2-fpm.service && nginx -g "daemon off;" systemctl not found
 # CMD php-fpm && nginx -g "daemon off;" fpm is running, pid 6 (but failed)
 # CMD service php8.2-fpm restart && nginx -g "daemon off;" php8.2-fpm: unrecognized service
-CMD php-fpm restart && nginx -g "daemon off;"
-
+# CMD php-fpm restart && nginx -g "daemon off;" incorrect usage
+CMD service php8.2-fpm restart && nginx -g "daemon off;"
