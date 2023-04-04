@@ -9,6 +9,7 @@ RUN apt-get update && \
         unzip \
         git \
         curl \
+        nginx \
         libssl-dev \
         openssl && \
     rm -rf /var/lib/apt/lists/*
@@ -51,10 +52,10 @@ RUN composer dump-autoload --optimize
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 80
-EXPOSE 80
+# EXPOSE 80
 
 # # Expose port 443
-# EXPOSE 443
+EXPOSE 443
 
 # Start NGINX and PHP-FPM
 # CMD service php8.2-fpm start && nginx -g "daemon off;" unreconized services
@@ -62,4 +63,6 @@ EXPOSE 80
 # CMD php-fpm && nginx -g "daemon off;" fpm is running, pid 6 (but failed)
 # CMD service php8.2-fpm restart && nginx -g "daemon off;" php8.2-fpm: unrecognized service
 # CMD php-fpm restart && nginx -g "daemon off;" incorrect usage
-CMD service php8.2-fpm restart && nginx -g "daemon off;"
+# CMD service php8.2-fpm restart && nginx -g "daemon off;" unreconized services
+CMD service php8.2-fpm restart && service nginx start && tail -f /dev/null
+
