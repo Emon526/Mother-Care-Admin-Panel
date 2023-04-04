@@ -1,47 +1,49 @@
-FROM php:8.2-fpm-alpine
+FROM php:8.2-cli
 
-# Install necessary packages
-RUN apk update && \
-    apk add --no-cache \
-    libpng-dev \
-    libzip-dev \
-    oniguruma-dev \
-    npm \
-    curl \
-    git \
-    unzip \
-    libxml2-dev \
-    libmcrypt-dev \
-    libressl-dev \
-    autoconf \
-    g++ \
-    make \
-    && docker-php-ext-install pdo_mysql \
-    && docker-php-ext-install gd \
-    && docker-php-ext-install zip \
-    && docker-php-ext-install pcntl \
-    && docker-php-ext-install opcache \
-    && docker-php-ext-install bcmath \
-    && pecl install mcrypt-1.0.4 && docker-php-ext-enable mcrypt \
-    && pecl install redis && docker-php-ext-enable redis \
-    && rm -rf /var/cache/apk/*
+RUN apt-get update && \
+    apt-get install -y \
+        libzip-dev \
+        zip \
+        unzip \
+        git \
+        curl \
+        libssl-dev \
+        openssl
 
-# Set working directory
-WORKDIR /app
+RUN openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 \
+    -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=example.com" \
+    -keyout /etc/ssl/private/ssl-cert.key -out /etc/ssl/certs/ssl-cert.crt
 
-# Copy Laravel files
-COPY . /app
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install Composer dependencies
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && composer install --no-dev --no-scripts --no-progress --prefer-dist --optimize-autoloader
+RUN docker-php-ext-install pdo_mysql zip
 
-# Install npm dependencies and build the assets
+RUN pecl install mongodb && docker-php-ext-enable mongodb
+
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
+
+WORKDIR /var/www/html
+
+COPY . .
+
+RUN chown -R www-data:www-data \
+        /var/www/html/storage \
+        /var/www/html/bootstrap/cache \
+        /var/www/html/public
+
+RUN composer install --no-scripts --no-autoloader --ignore-platform-reqs
+
+RUN composer dump-autoload --optimize
+
+RUN php artisan optimize
+
+RUN php artisan config:cache
+
 RUN npm install && npm run build
 
-# Set permission
-RUN chown -R www-data:www-data /app/storage
+RUN mkdir -p public/build && chown -R www-data:www-data public
 
-# Expose port 9000 and start php-fpm
-EXPOSE 9000
-CMD ["php-fpm"]
+EXPOSE 443
+
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=443"]
