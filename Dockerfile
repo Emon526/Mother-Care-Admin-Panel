@@ -10,6 +10,7 @@ RUN apt-get update && \
         git \
         curl \
         nginx \
+        php8.2-fpm \
         libssl-dev \
         openssl && \
     rm -rf /var/lib/apt/lists/*
