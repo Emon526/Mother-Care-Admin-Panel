@@ -23,8 +23,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Install Node.js and npm
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt-get install -y nodejs
-
+RUN apt-get update && apt-get install -y nodejs
 # Copy source code
 WORKDIR /var/www/html
 COPY . .
@@ -56,4 +55,5 @@ EXPOSE 80
 # EXPOSE 443
 
 # Start NGINX and PHP-FPM
-CMD service php8.2-fpm start && nginx -g "daemon off;"
+# CMD service php8.2-fpm start && nginx -g "daemon off;"
+CMD systemctl start php8.2-fpm.service && nginx -g "daemon off;"
