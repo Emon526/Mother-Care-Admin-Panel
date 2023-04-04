@@ -55,7 +55,8 @@ EXPOSE 80
 # EXPOSE 443
 
 # Start NGINX and PHP-FPM
-# CMD service php8.2-fpm start && nginx -g "daemon off;"
-# CMD systemctl start php8.2-fpm.service && nginx -g "daemon off;"
-CMD php-fpm && nginx -g "daemon off;"
+# CMD service php8.2-fpm start && nginx -g "daemon off;" unreconized services
+# CMD systemctl start php8.2-fpm.service && nginx -g "daemon off;" systemctl not found
+# CMD php-fpm && nginx -g "daemon off;" fpm is running, pid 6 (but failed)
+CMD service php8.2-fpm restart && nginx -g "daemon off;"
 
