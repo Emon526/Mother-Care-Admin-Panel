@@ -56,4 +56,6 @@ EXPOSE 80
 
 # Start NGINX and PHP-FPM
 # CMD service php8.2-fpm start && nginx -g "daemon off;"
-CMD systemctl start php8.2-fpm.service && nginx -g "daemon off;"
+# CMD systemctl start php8.2-fpm.service && nginx -g "daemon off;"
+CMD php-fpm && nginx -g "daemon off;"
+
