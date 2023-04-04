@@ -387,6 +387,7 @@
         font-family: 'Nunito', sans-serif;
     }
     </style>
+        <!-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) -->
 </head>
 
 <body class="antialiased">
