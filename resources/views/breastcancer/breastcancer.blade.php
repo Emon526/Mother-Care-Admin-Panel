@@ -8,7 +8,7 @@
         <div class="card-body">
             <ui class="list-item">
                 <li class="list-group-item">
-                    <a href="#"class="text-decoration-none">Articles</a>
+                    <a href="{{route('article.index')}}"class="text-decoration-none">Articles</a>
                 </li>
             </ui>
         </div>
