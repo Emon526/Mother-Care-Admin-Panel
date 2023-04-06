@@ -7,7 +7,8 @@
         <div class="card-body">
             <a href="{{route('doctors.create')}}" class="btn btn-primary">Create New Doctor</a>
             <div class="mt-3">
-                <h3>List of Doctors</h3>
+                <h3 style="text-align:center">List of Doctors</h3>
+                @forelse($doctors as $doctor)
                 <table class="table table-striped ">
                     <thead>
                         <tr>
@@ -17,9 +18,9 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                   
+
                     <tbody>
-                    @forelse($doctors as $doctor)
+
                         <tr>
                             <td>
                                 <img class="rounded" id="image-preview" width='100' height='100'
@@ -30,10 +31,10 @@
 
                             <td class="align-middle"> {{$doctor->location}}</td>
 
-                            <td class="align-middle" style="text-align:center;">
-
+                            <td class="align-middle" style="text-align:center">
+                            <div class="d-flex justify-content-center">
                                 <a href="{{route('doctors.edit',[$doctor])}}"
-                                    class="btn btn-warning btn-sm mb-2">Edit</a>
+                                    class="btn btn-warning btn-sm me-2">Edit</a>
 
                                 <form action="{{route('doctors.destroy',[$doctor])}}" method="post">
                                     @csrf
@@ -42,16 +43,17 @@
                                         Delete
                                     </button>
                                 </form>
-
-                            </td>
+                            </div>
+                        </td>
                         </tr>
-                        @empty
-                        <li class="list-group-item" style="text-align:center">No Doctor Added Yet</li>
-                  
+
+
                     </tbody>
-                    @endforelse
+
                 </table>
-                        
+                @empty
+                <li class="list-group-item" style="text-align:center">No Doctor Added Yet</li>
+                @endforelse
             </div>
         </div>
     </div>
