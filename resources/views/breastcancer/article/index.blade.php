@@ -8,16 +8,19 @@
             <a href="{{route('article.create')}}" class="btn btn-primary">Create New Article</a>
             <div class="mt-3">
                 <h3 style="text-align:center">List of Articles</h3>
-                @forelse($articles as $article)
+              
 
+                @if(count($articles) > 0)
                 <table class="table table-striped ">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Title</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                    @foreach($articles as $article)
                         <tr>
                             <td>{{$article->articleId}}</td>
                             <td>{{$article->articleTitle}}</td>
@@ -35,13 +38,13 @@
                                 </div>
                             </td>
                         </tr>
-
-
+                    @endforeach
                     </tbody>
                 </table>
-                @empty
-                <li class="list-group-item" style="text-align:center">No Article Added Yet</li>
-                @endforelse
+                @else
+                <p class="mt-3" style="text-align:center">No Article Added Yet</p>
+                @endif
+         
             </div>
         </div>
     </div>

@@ -8,7 +8,8 @@
             <a href="{{route('doctors.create')}}" class="btn btn-primary">Create New Doctor</a>
             <div class="mt-3">
                 <h3 style="text-align:center">List of Doctors</h3>
-                @forelse($doctors as $doctor)
+                @if(count($doctors) > 0)
+               
                 <table class="table table-striped ">
                     <thead>
                         <tr>
@@ -20,7 +21,7 @@
                     </thead>
 
                     <tbody>
-
+                    @foreach($doctors as $doctor)
                         <tr>
                             <td>
                                 <img class="rounded" id="image-preview" width='100' height='100'
@@ -47,13 +48,13 @@
                         </td>
                         </tr>
 
-
+                        @endforeach
                     </tbody>
 
                 </table>
-                @empty
+                @else
                 <li class="list-group-item" style="text-align:center">No Doctor Added Yet</li>
-                @endforelse
+                @endif
             </div>
         </div>
     </div>
