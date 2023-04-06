@@ -86,10 +86,13 @@
 
                             <div class="card-body">
                                 <ui class="list-item">
-                               
-                                    <li class="list-group-item">
-                                        <a href="{{route('doctors.index')}}">Doctors</a>
+                                <li class="list-group-item">
+                                        <a href="{{route('breastcancer')}}"class="text-decoration-none">Breast Cancer</a>
                                     </li>
+                                    <li class="list-group-item">
+                                        <a href="{{route('doctors.index')}}"class="text-decoration-none">Doctors</a>
+                                    </li>
+                                  
                                 </ui>
                             </div>
                         </div>
