@@ -21,12 +21,21 @@
                     <input placeholder="Article ID" type="number" name="articleId" class="form-control mt-3"
                         id="articleId"value="{{$article->articleId}}">
                         <input placeholder="Article Title" type="text" name="articleTitle" class="form-control mt-3"
-                        id="articleTitle"value="{{$article->articleTitle}}">
-                    <input placeholder="Aticle Description" type="text" name="articleDescription" class="form-control mt-3"
-                        id="articleDescription"value="{{$article->articleDescription}}">
+                        id="articleTitle" value="{{$article->articleTitle}}">
+
+                    <textarea placeholder="Article Description" name="articleDescription" class="form-control mt-3"
+                        id="articleDescription" rows="6">{{ $article->articleDescription }}</textarea>
 
                 </div>
                 <button class="btn btn-primary mt-3">Update</button>
+                                <div class="d-flex justify-content-center mt-3">
+                    <div class="alert alert-info" role="alert">
+                        <h5 class="alert-heading">Hint:</h5>
+                        <p>Try using <strong>**</strong> to make text bold. For example, <strong>**Text**</strong>.</p>
+                        <p>For bullet points, use the <strong>&bull;</strong> character at the beginning of a sentence.
+                        </p>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
@@ -42,9 +51,7 @@ imagePicker.addEventListener('change', (event) => {
     reader.onload = () => {
         imagePreview.src = reader.result;
     };
-    
+
 });
-
-
 </script>
 @endsection

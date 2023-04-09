@@ -9,14 +9,12 @@
             <div class="mt-3">
                 <h3 style="text-align:center">List of Articles</h3>
               
-
                 @if(count($articles) > 0)
                 <table class="table table-striped ">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Title</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
