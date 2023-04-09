@@ -16,7 +16,6 @@
                             <th>Image</th>
                             <th>Name</th>
                             <th>Location</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
 
