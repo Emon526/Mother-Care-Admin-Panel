@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->string(column:'articleId');
-            $table->string(column:'articleTitle');
-            $table->string(column:'articleDescription');
+            $table->json('articleTitle');
+            $table->json('articleDescription');
             $table->string(column:'articleImage');
             $table->timestamps();
         });

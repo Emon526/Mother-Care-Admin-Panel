@@ -19,10 +19,14 @@
 
                     <input placeholder="Article ID" type="number" name="articleId" class="form-control mt-3"
                         id="articleId">
-                    <input placeholder="Article Title" type="text" name="articleTitle" class="form-control mt-3"
-                        id="articleTitle">
-                    <textarea placeholder="Article Description" name="articleDescription" class="form-control mt-3"
-                        id="articleDescription" rows="6"></textarea>
+                    <input placeholder="Bangali Title" type="text" name="banglaTitle" class="form-control mt-3"
+                        id="banglaTitle">
+                    <textarea placeholder="Bangali Description" name="banglaDescription" class="form-control mt-3"
+                        id="banglaDescription" rows="6"></textarea>
+                    <input placeholder="English Title" type="text" name="englishTitle" class="form-control mt-3"
+                        id="englishTitle">
+                    <textarea placeholder="English Description" name="englishDescription" class="form-control mt-3"
+                        id="englishDescription" rows="6"></textarea>
                 </div>
 
                 <button class="btn btn-primary mt-3">Save</button>
