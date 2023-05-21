@@ -12,23 +12,28 @@
                 <div class="form-group">
 
                     <label for="articleImage">Choose Article image:</label>
-                    <input type="file"class="form-control mt-3" id="articleImage" accept="image/*"name="articleImage" >
+                    <input type="file" class="form-control mt-3" id="articleImage" accept="image/*" name="articleImage">
                     <div style="display:flex; justify-content:center;">
-                <img id="image-preview"class="form-control mt-3" style="max-width: 20%;" src="data:image/png;base64,{{ $article->articleImage }}" alt="Image Preview">
+                        <img id="image-preview" class="form-control mt-3" style="max-width: 20%;"
+                            src="data:image/png;base64,{{ $article->articleImage }}" alt="Image Preview">
                     </div>
 
 
                     <input placeholder="Article ID" type="number" name="articleId" class="form-control mt-3"
-                        id="articleId"value="{{$article->articleId}}">
-                        <input placeholder="Article Title" type="text" name="articleTitle" class="form-control mt-3"
-                        id="articleTitle" value="{{$article->articleTitle}}">
+                        id="articleId" value="{{$article->articleId}}">
 
-                    <textarea placeholder="Article Description" name="articleDescription" class="form-control mt-3"
-                        id="articleDescription" rows="6">{{ $article->articleDescription }}</textarea>
+                    <input placeholder="Bangali Title" type="text" name="banglaTitle" class="form-control mt-3"
+                        id="banglaTitle" value="{{json_decode($article->articleTitle)->bn}}">
+                    <textarea placeholder="Bangali Description" name="banglaDescription" class="form-control mt-3"
+                        id="banglaDescription" rows="6">{{json_decode($article->articleDescription)->bn}}</textarea>
+                    <input placeholder="English Title" type="text" name="englishTitle" class="form-control mt-3"
+                        id="englishTitle" value="{{json_decode($article->articleTitle)->en}}">
+                    <textarea placeholder="English Description" name="englishDescription" class="form-control mt-3"
+                        id="englishDescription" rows="6">{{json_decode($article->articleDescription)->en}}</textarea>
 
                 </div>
                 <button class="btn btn-primary mt-3">Update</button>
-                                <div class="d-flex justify-content-center mt-3">
+                <div class="d-flex justify-content-center mt-3">
                     <div class="alert alert-info" role="alert">
                         <h5 class="alert-heading">Hint:</h5>
                         <p>Try using <strong>**</strong> to make text bold. For example, <strong>**Text**</strong>.</p>

@@ -15,7 +15,17 @@ class ArticleController extends Controller
     public function index()
     {
         //
-        $articles = Article::all();
+        $responsearticles = Article::all();
+
+        $articles = [];
+        foreach ($responsearticles as $article) {
+            $articles[] = [
+                'articleImage' => $article->articleImage,
+                'articleId' => $article->articleId,
+                'articleTitle' => json_decode($article->articleTitle, true),
+                'articleDescription' => json_decode($article->articleDescription, true),
+            ];
+        }
         return view('breastcancer.article.index',compact('articles'));
     }
 
@@ -42,8 +52,10 @@ class ArticleController extends Controller
         $request->validate([
             'articleImage'=>'nullable|image|mimes:png,jpg,jpeg|max:2048',
             'articleId'=>'required',
-            'articleTitle'=>'required',
-            'articleDescription'=>'required',
+            'banglaTitle'=>'required',
+            'banglaDescription'=>'required',
+            'englishTitle'=>'required',
+            'englishDescription'=>'required',
         ]);
         $imageBase64 = $request->articleImage; 
         if ($request->hasFile('articleImage')) {
@@ -56,9 +68,16 @@ class ArticleController extends Controller
         Article::create([
             'articleImage'=> $imageBase64,
             'articleId'=>$request->articleId,
-            'articleTitle'=>$request->articleTitle,
-            'articleDescription'=>$request->articleDescription,
+            'articleTitle'=>json_encode([
+                'bn'=>$request->banglaTitle,
+                'en'=>$request->englishTitle,
+            ]),
+            'articleDescription'=>json_encode([
+                'bn'=>$request->banglaDescription,
+                'en'=>$request->englishDescription,
+            ]),
         ]);
+        
         return redirect()->route('article.index');
     }
 
@@ -79,9 +98,10 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function edit(Article $article)
+    public function edit($article)
     {
-        // 
+
+        $article = Article::where('articleId', $article)->firstOrFail();
         return view('breastcancer.article.edit',compact('article'));
     }
 
@@ -99,8 +119,10 @@ class ArticleController extends Controller
 
             'articleImage'=>'nullable|image|mimes:png,jpg,jpeg|max:2048',
             'articleId'=>'required',
-            'articleTitle'=>'required',
-            'articleDescription'=>'required',
+            'banglaTitle'=>'required',
+            'banglaDescription'=>'required',
+            'englishTitle'=>'required',
+            'englishDescription'=>'required',
         ]);
         
         $imageBase64 = $article->articleImage; // default to existing value
@@ -111,13 +133,18 @@ class ArticleController extends Controller
             $imageData = file_get_contents($file);
             $imageBase64 = base64_encode($imageData);
         }
-  
         $article->update([
        
             'articleImage'=> $imageBase64,
             'articleId'=>$request->articleId,
-            'articleTitle'=>$request->articleTitle,
-            'articleDescription'=>$request->articleDescription,
+            'articleTitle'=>json_encode([
+                'bn'=>$request->banglaTitle,
+                'en'=>$request->englishTitle,
+            ]),
+            'articleDescription'=>json_encode([
+                'bn'=>$request->banglaDescription,
+                'en'=>$request->englishDescription,
+            ]),
         ]);
      
         return redirect()->route('article.index');
@@ -129,10 +156,9 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article)
+    public function destroy($article)
     {
-        //
-        $article->delete();
+    Article::where('articleId',$article)->delete();
         return redirect()->route('article.index');
     }
 }

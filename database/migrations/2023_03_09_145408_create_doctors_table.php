@@ -14,16 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::create('doctors', function (Blueprint $table) {
+            $table->string(column:'doctorId');
             $table->string(column:'image');
-            $table->string(column:'doctorname');
-            $table->string(column:'degree');
-            $table->string(column:'speciality');
-            $table->string(column:'workplace');
-            $table->string(column:'biography');
+            $table->json('doctorname');
+            $table->json('degree');
+            $table->json('speciality');
+            $table->json('workplace');
+            $table->json('biography');
             $table->string(column:'experience');
             $table->string(column:'rating');
             $table->string(column:'appointmentNumber');
-            $table->string(column:'location');
+            $table->json('location');
             $table->timestamps();
         });
     }

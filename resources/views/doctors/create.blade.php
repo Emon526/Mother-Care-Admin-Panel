@@ -15,14 +15,27 @@
                     <div style="display:flex; justify-content:center;">
                 <img id="image-preview"class="form-control mt-3" style="max-width: 20%;" src="#" alt="Image Preview">
                     </div>
-                    <input placeholder="Name" type="text" name="doctorname" class="form-control mt-3" id="doctorname">
-                    <input placeholder="Degree" type="text" name="degree" class="form-control mt-3" id="degree">
-                    <input placeholder="Speciality" type="text" name="speciality" class="form-control mt-3"
-                        id="speciality">
-                    <input placeholder="Workplace" type="text" name="workplace" class="form-control mt-3"
-                        id="workplace">
-                    <input placeholder="Biography" type="text" name="biography" class="form-control mt-3"
-                        id="biography">
+
+                    <input placeholder="Doctor ID" type="number" name="doctorId" class="form-control mt-3"
+                        id="doctorId">
+                    <input placeholder="Name in Bangla" type="text" name="bangladoctorname" class="form-control mt-3" id="bangladoctorname">
+                    <input placeholder="Name in English" type="text" name="englishdoctorname" class="form-control mt-3" id="englishdoctorname">
+                    <input placeholder="Degree in Bangla" type="text" name="bangladegree" class="form-control mt-3" id="bangladegree">
+                    <input placeholder="Degree in English" type="text" name="englishdegree" class="form-control mt-3" id="englishdegree">
+                    <input placeholder="Speciality in Bangla" type="text" name="banglaspeciality" class="form-control mt-3"
+                        id="banglaspeciality">
+                        <input placeholder="Speciality in English" type="text" name="englishspeciality" class="form-control mt-3"
+                        id="englishspeciality">
+                    <input placeholder="Workplace in Bangla" type="text" name="banglaworkplace" class="form-control mt-3"
+                        id="banglaworkplace">
+                        <input placeholder="Workplace in English" type="text" name="englishworkplace" class="form-control mt-3"
+                        id="englishworkplace">
+
+                        <textarea placeholder="Biography in Bangla" name="banglabiography" class="form-control mt-3"
+                        id="banglabiography" rows="6"></textarea>
+                        <textarea placeholder="Biography in English" name="englishbiography" class="form-control mt-3"
+                        id="englishbiography" rows="6"></textarea>
+                     
                     <input placeholder="Experience" type="number" name="experience" class="form-control mt-3"
                         id="experience">
                     <input placeholder="Rating" type="number" min="0" max="5" step=0.1 name="rating" class="form-control mt-3" id="rating">
@@ -30,10 +43,11 @@
                     <input placeholder="Appointment Number" type="tel" maxlength="14" name="appointmentNumber"
                         class="form-control mt-3" id="appointmentNumber" >
 
-                    <input placeholder="Location" type="text" name="location" class="form-control mt-3" id="location">
+                    <input placeholder="Location in Bangla" type="text" name="banglalocation" class="form-control mt-3" id="banglalocation">
+                    <input placeholder="Location in English" type="text" name="englishlocation" class="form-control mt-3" id="englishlocation">
                 </div>
 
-                <button class="btn btn-primary mt-3">Save</button>
+                <button class="btn btn-primary mt-3">Save</button> 
             </form>
 
         </div>
