@@ -23,7 +23,8 @@ WORKDIR /var/www/html
 COPY composer.json composer.lock ./
 
 # Install PHP dependencies without dev dependencies
-RUN composer install --no-scripts --no-autoloader --no-dev --ignore-platform-reqs
+RUN composer install --no-scripts --no-autoloader --no-dev --ignore-platform-reqs \
+    && composer dump-autoload --optimize --classmap-authoritative
 
 # Copy the rest of the application code
 COPY . .
@@ -34,10 +35,10 @@ RUN chown -R www-data:www-data \
         bootstrap/cache \
         public
 
-# Optimize the autoloader and clear cached files
-RUN composer dump-autoload --optimize && \
-    php artisan optimize && \
-    php artisan config:cache
+# Optimize the Laravel application
+RUN php artisan optimize && \
+    php artisan config:cache && \
+    php artisan route:cache
 
 # Cleanup unnecessary files
 RUN rm -rf \
