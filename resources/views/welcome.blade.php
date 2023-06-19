@@ -238,7 +238,8 @@
 
     .text-gray-500 {
         --tw-text-opacity: 1;
-        color: rgb(107 114 128 / var(--tw-text-opacity))
+        color: #FF80AB;
+        /* color: rgb(107 114 128 / var(--tw-text-opacity)) */
     }
 
     .text-gray-600 {
