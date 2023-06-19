@@ -22,7 +22,8 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/') }}" style="color: #FF80AB; font-family: Lucida Sans">
+                    <img src={{ asset('logo.png') }} alt="Logo" style="height: 2rem">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -75,26 +76,30 @@
                 </div>
             </div>
         </nav>
-     
+
         <main class="py-4">
             <div class="container">
                 <div class="row justify-content-center">
-                @auth
+                    @auth
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-header">{{ __('Menu') }}</div>
 
                             <div class="card-body">
-                                <ui class="list-item">
-                                <li class="list-group-item">
-                                        <a href="{{route('breastcancer')}}"class="text-decoration-none">Breast Cancer</a>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <a href="{{route('doctors.index')}}"class="text-decoration-none">Doctors</a>
-                                    </li>
-                                  
-                                </ui>
+                                <div class="list-group ">
+                                    <ui class="list-item rounded">
+                                        <li class="list-group-item">
+                                            <a href="{{route('breastcancer')}}" class="text-decoration-none">Breast
+                                                Cancer</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="{{route('doctors.index')}}"
+                                                class="text-decoration-none">Doctors</a>
+                                        </li>
+                                    </ui>
+                                </div>
                             </div>
+                            
                         </div>
                     </div>
                     @endauth
