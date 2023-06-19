@@ -13,6 +13,7 @@
                 <table class="table table-striped ">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Image</th>
                             <th>Name</th>
                             <th>Location</th>
@@ -22,6 +23,7 @@
                     <tbody>
                     @foreach($doctors as $doctor)
                         <tr>
+                        <td  class="align-middle">{{ $doctor['doctorId']}}</td>
                             <td>
                                 <img class="rounded" id="image-preview" width='100' height='100'
                                     src="data:image/png;base64,{{ $doctor['image'] }}" alt="No Image Chosen" />
