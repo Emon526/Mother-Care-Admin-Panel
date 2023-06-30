@@ -9,7 +9,7 @@
             <div class="mt-3">
                 <h3 style="text-align:center">List of Doctors</h3>
                 @if(count($doctors) > 0)
-               
+
                 <table class="table table-striped ">
                     <thead>
                         <tr>
@@ -21,32 +21,43 @@
                     </thead>
 
                     <tbody>
-                    @foreach($doctors as $doctor)
+                        
+                    <?php
+                        // Sort the doctors array by doctorid
+                        usort($doctors, function ($a, $b) {
+                            return $a['doctorId'] - $b['doctorId'];
+                        });
+                        ?>
+
+                        @foreach($doctors as $doctor)
                         <tr>
-                        <td  class="align-middle">{{ $doctor['doctorId']}}</td>
+                            <td class="align-middle">{{ $doctor['doctorId']}}</td>
                             <td>
                                 <img class="rounded" id="image-preview" width='100' height='100'
                                     src="data:image/png;base64,{{ $doctor['image'] }}" alt="No Image Chosen" />
                             </td>
 
-                            <td class="align-middle"> {{$doctor['doctorname']['en']}} || {{$doctor['doctorname']['bn']}}</td>
+                            <td class="align-middle"> {{$doctor['doctorname']['en']}} || {{$doctor['doctorname']['bn']}}
+                            </td>
 
-                            <td class="align-middle"> {{$doctor['location']['en']}} || {{$doctor['location']['bn']}}</td>
+                            <td class="align-middle"> {{$doctor['location']['en']}} || {{$doctor['location']['bn']}}
+                            </td>
 
                             <td class="align-middle" style="text-align:center">
-                            <div class="d-flex justify-content-center">
-                                <a href="{{route('doctors.edit',['doctor' => $doctor['doctorId']])}}"
-                                    class="btn btn-warning btn-sm me-2">Edit</a>
+                                <div class="d-flex justify-content-center">
+                                    <a href="{{route('doctors.edit',['doctor' => $doctor['doctorId']])}}"
+                                        class="btn btn-warning btn-sm me-2">Edit</a>
 
-                                <form action="{{route('doctors.destroy',['doctor' => $doctor['doctorId']])}}" method="post">
-                                    @csrf
-                                    @method("DELETE")
-                                    <button class="btn btn-danger btn-sm">
-                                        Delete
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
+                                    <form action="{{route('doctors.destroy',['doctor' => $doctor['doctorId']])}}"
+                                        method="post">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button class="btn btn-danger btn-sm">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
                         </tr>
 
                         @endforeach
