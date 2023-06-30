@@ -42,8 +42,14 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        //
-        return view('doctors.create');
+    // Get the list of doctors
+    $doctors = Doctor::all();
+
+    // Calculate the number of doctors
+    $doctorsLength = $doctors->count();
+
+    // Pass the list of doctors and the length to the view
+    return view('doctors.create', compact('doctorsLength'));
     }
 
     /**

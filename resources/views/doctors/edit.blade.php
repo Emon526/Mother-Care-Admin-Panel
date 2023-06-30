@@ -20,40 +20,46 @@
 
                     <input placeholder="Doctor ID" type="number" name="doctorId" class="form-control mt-3" id="doctorId"
                         value="{{$doctor->doctorId}}">
-                    <input placeholder="Name in Bangla" type="text" name="bangladoctorname" class="form-control mt-3"
-                        id="bangladoctorname" value="{{json_decode($doctor->doctorname)->bn}}">
-                    <input placeholder="Name in English" type="text" name="englishdoctorname" class="form-control mt-3"
-                        id="englishdoctorname" value="{{json_decode($doctor->doctorname)->en}}">
-                    <input placeholder="Degree in Bangla" type="text" name="bangladegree" class="form-control mt-3"
-                        id="bangladegree" value="{{json_decode($doctor->degree)->bn}}">
-                    <input placeholder="Degree in English" type="text" name="englishdegree" class="form-control mt-3"
-                        id="englishdegree" value="{{json_decode($doctor->degree)->en}}">
-                    <input placeholder="Speciality in Bangla" type="text" name="banglaspeciality"
-                        class="form-control mt-3" id="banglaspeciality"
-                        value="{{json_decode($doctor->speciality)->bn}}">
-                    <input placeholder="Speciality in English" type="text" name="englishspeciality"
-                        class="form-control mt-3" id="englishspeciality"
-                        value="{{json_decode($doctor->speciality)->en}}">
-                    <input placeholder="Workplace in Bangla" type="text" name="banglaworkplace"
-                        class="form-control mt-3" id="banglaworkplace" value="{{json_decode($doctor->workplace)->bn}}">
-                    <input placeholder="Workplace in English" type="text" name="englishworkplace"
-                        class="form-control mt-3" id="englishworkplace" value="{{json_decode($doctor->workplace)->en}}">
-                        <textarea placeholder="Biography in Bangla" name="banglabiography" class="form-control mt-3"
-                        id="banglabiography" rows="6">{{json_decode($doctor->biography)->bn}}</textarea>
-                        <textarea placeholder="Biography in English" name="englishbiography" class="form-control mt-3"
-                        id="englishbiography" rows="6">{{json_decode($doctor->biography)->en}}</textarea>
-
-                    <input placeholder="Experience" type="number" name="experience" class="form-control mt-3"
+                        <input placeholder="Experience" type="number" name="experience" class="form-control mt-3"
                         id="experience" value="{{$doctor->experience}}">
                     <input placeholder="Rating" type="number" min="0" max="5" step=0.1 name="rating"
                         class="form-control mt-3" id="rating" value="{{$doctor->rating}}">
                     <input placeholder="Appointment Number" type="tel" name="appointmentNumber" maxlength="14"
                         class="form-control mt-3" id="appointmentNumber" value="{{$doctor->appointmentNumber}}">
-
-                    <input placeholder="Location in Bangla" type="text" name="banglalocation" class="form-control mt-3"
+                        <div class="btn-group mt-3" role="group" aria-label="Language Toggle">
+                        <button type="button" class="btn btn-primary" id="toggleLanguage">Toggle Language</button>
+                    </div>
+                    <div id="banglaFields" style="display: none;">
+                    <input placeholder="Name in Bangla" type="text" name="bangladoctorname" class="form-control mt-3"
+                        id="bangladoctorname" value="{{json_decode($doctor->doctorname)->bn}}">
+                        <input placeholder="Degree in Bangla" type="text" name="bangladegree" class="form-control mt-3"
+                        id="bangladegree" value="{{json_decode($doctor->degree)->bn}}">
+                        <input placeholder="Speciality in Bangla" type="text" name="banglaspeciality"
+                        class="form-control mt-3" id="banglaspeciality"
+                        value="{{json_decode($doctor->speciality)->bn}}">
+                        <input placeholder="Workplace in Bangla" type="text" name="banglaworkplace"
+                        class="form-control mt-3" id="banglaworkplace" value="{{json_decode($doctor->workplace)->bn}}">
+                        <input placeholder="Location in Bangla" type="text" name="banglalocation" class="form-control mt-3"
                         id="banglalocation" value="{{json_decode($doctor->location)->bn}}">
-                    <input placeholder="Location in English" type="text" name="englishlocation"
+                        <textarea placeholder="Biography in Bangla" name="banglabiography" class="form-control mt-3"
+                        id="banglabiography" rows="6">{{json_decode($doctor->biography)->bn}}</textarea>
+                        </div>
+                        <div id="englishFields">
+                    <input placeholder="Name in English" type="text" name="englishdoctorname" class="form-control mt-3"
+                        id="englishdoctorname" value="{{json_decode($doctor->doctorname)->en}}">
+                    <input placeholder="Degree in English" type="text" name="englishdegree" class="form-control mt-3"
+                        id="englishdegree" value="{{json_decode($doctor->degree)->en}}">
+                    <input placeholder="Speciality in English" type="text" name="englishspeciality"
+                        class="form-control mt-3" id="englishspeciality"
+                        value="{{json_decode($doctor->speciality)->en}}">
+                    <input placeholder="Workplace in English" type="text" name="englishworkplace"
+                        class="form-control mt-3" id="englishworkplace" value="{{json_decode($doctor->workplace)->en}}">
+                        <input placeholder="Location in English" type="text" name="englishlocation"
                         class="form-control mt-3" id="englishlocation" value="{{json_decode($doctor->location)->en}}">
+                        <textarea placeholder="Biography in English" name="englishbiography" class="form-control mt-3"
+                        id="englishbiography" rows="6">{{json_decode($doctor->biography)->en}}</textarea>
+
+                        </div>
                 </div>
                 <button class="btn btn-primary mt-3">Update</button>
             </form>
@@ -63,6 +69,9 @@
 <script>
 const imagePicker = document.getElementById('image');
 const imagePreview = document.getElementById('image-preview');
+const toggleButton = document.getElementById('toggleLanguage');
+        const banglaFields = document.getElementById('banglaFields');
+        const englishFields = document.getElementById('englishFields');
 
 imagePicker.addEventListener('change', (event) => {
     const file = event.target.files[0];
@@ -73,6 +82,16 @@ imagePicker.addEventListener('change', (event) => {
     };
 
 });
+
+toggleButton.addEventListener('click', () => {
+            if (banglaFields.style.display === 'none') {
+                banglaFields.style.display = 'block';
+                englishFields.style.display = 'none';
+            } else {
+                banglaFields.style.display = 'none';
+                englishFields.style.display = 'block';
+            }
+        });
 
 const input = document.querySelector('#rating');
 input.addEventListener('change', e => {

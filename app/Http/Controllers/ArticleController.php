@@ -36,8 +36,14 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
-        return view('breastcancer.article.create');
+    // Get the list of articles
+    $articles = Article::all();
+
+    // Calculate the number of articles
+    $articlesLength = $articles->count();
+
+    // Pass the list of articles and the length to the view
+    return view('breastcancer.article.create', compact('articlesLength'));
     }
 
     /**
