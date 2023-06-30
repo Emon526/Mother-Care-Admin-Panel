@@ -8,7 +8,7 @@
             <a href="{{route('article.create')}}" class="btn btn-primary">Create New Article</a>
             <div class="mt-3">
                 <h3 style="text-align:center">List of Articles</h3>
-              
+
                 @if(count($articles) > 0)
                 <table class="table table-striped ">
                     <thead>
@@ -18,16 +18,25 @@
                         </tr>
                     </thead>
                     <tbody>
+
+                        <?php
+                        // Sort the articles array by articleId
+                        usort($articles, function ($a, $b) {
+                        return $a['articleId'] - $b['articleId'];
+                        });
+                        ?>
+
                         @foreach($articles as $article)
-                         <tr>
+                        <tr>
                             <td>{{ $article['articleId']}}</td>
                             <td>{{ $article['articleTitle']['en']}} || {{ $article['articleTitle']['bn']}}</td>
                             <td>
                                 <div class="d-flex justify-content-end">
                                     <a href="{{route('article.edit',['article' => $article['articleId']])}}"
                                         class="btn btn-warning btn-sm me-2">Edit</a>
-                                       
-                                    <form action="{{route('article.destroy',['article' =>$article['articleId']])}}" method="post">
+
+                                    <form action="{{route('article.destroy',['article' =>$article['articleId']])}}"
+                                        method="post">
                                         @csrf
                                         @method("DELETE")
                                         <button class="btn btn-danger btn-sm">
@@ -43,7 +52,7 @@
                 @else
                 <p class="mt-3" style="text-align:center">No Article Added Yet</p>
                 @endif
-                              
+
             </div>
         </div>
     </div>
