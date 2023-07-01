@@ -3,7 +3,7 @@
 @section('content')
 <div class="col-md-8">
     <div class="card">
-        <div class="card-header">{{ __('Breast Cancer') }}</div>
+        <div class="card-header  bg-primary text-white">{{ __('Breast Cancer') }}</div>
 
         <div class="card-body">
             <ui class="list-item">

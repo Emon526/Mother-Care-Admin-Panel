@@ -3,7 +3,7 @@
 @section('content')
 <div class="col-md-8">
     <div class="card">
-        <div class="card-header">{{ __('Create a New Doctor') }}</div>
+        <div class="card-header  bg-primary text-white">{{ __('Create a New Doctor') }}</div>
         <div class="card-body">
 
             <form action="{{route('doctors.store')}}" method="post" enctype="multipart/form-data">

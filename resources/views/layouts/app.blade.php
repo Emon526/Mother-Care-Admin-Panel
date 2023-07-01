@@ -83,7 +83,7 @@
                     @auth
                     <div class="col-md-4">
                         <div class="card">
-                            <div class="card-header">{{ __('Menu') }}</div>
+                            <div class="card-header  bg-primary text-white">{{ __('Menu') }}</div>
 
                             <div class="card-body">
                                 <div class="list-group ">

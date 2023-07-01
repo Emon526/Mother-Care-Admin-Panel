@@ -3,7 +3,7 @@
 @section('content')
 <div class="col-md-8">
     <div class="card">
-        <div class="card-header">{{ __('Articles') }}</div>
+        <div class="card-header bg-primary text-white">{{ __('Articles') }}</div>
         <div class="card-body">
         <div class="d-flex justify-content-between">
             <a href="{{ route('article.create') }}" class="btn btn-primary">Create New Article</a>
