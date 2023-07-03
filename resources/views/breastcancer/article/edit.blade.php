@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="col-md-8">
-    <div class="card">
+    <div class="card shadow">
         <div class="card-header  bg-primary text-white">{{ __('Edit Article') }}</div>
         <div class="card-body">
 
@@ -20,18 +20,29 @@
 
                     <input placeholder="Article ID" type="number" name="articleId" class="form-control mt-3" id="articleId" value="{{ $article->articleId }}">
                     
-                    <div class="btn-group mt-3" role="group" aria-label="Language Toggle">
-                        <button type="button" class="btn btn-primary" id="toggleLanguage">Toggle Language</button>
+                    <div class="btn-group mt-4 mb-4" role="group" aria-label="Language Toggle">
+                        <button type="button" class="btn btn-primary toggle-language-btn" id="toggleEnglish">English</button>
+                        <button type="button" class="btn-secondary btn  toggle-language-btn" id="toggleBangla">Bangla</button>
                     </div>
 
-                    <div id="banglaFields" style="display: none;">
-                        <input placeholder="Bangali Title" type="text" name="banglaTitle" class="form-control mt-3" id="banglaTitle" value="{{ json_decode($article->articleTitle)->bn }}">
-                        <textarea placeholder="Bangali Description" name="banglaDescription" class="form-control mt-3" id="banglaDescription" rows="6">{{ json_decode($article->articleDescription)->bn }}</textarea>
+                    <div class="card shadow mb-4" id="banglaFields" style="display: none;">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Bangla</h5>
+                </div>
+                <div class="card-body">
+                        <input placeholder="Title" type="text" name="banglaTitle" class="form-control mt-3" id="banglaTitle" value="{{ json_decode($article->articleTitle)->bn }}">
+                        <textarea placeholder="Description" name="banglaDescription" class="form-control mt-3" id="banglaDescription" rows="6">{{ json_decode($article->articleDescription)->bn }}</textarea>
+                    </div>
                     </div>
 
-                    <div id="englishFields">
-                        <input placeholder="English Title" type="text" name="englishTitle" class="form-control mt-3" id="englishTitle" value="{{ json_decode($article->articleTitle)->en }}">
-                        <textarea placeholder="English Description" name="englishDescription" class="form-control mt-3" id="englishDescription" rows="6">{{ json_decode($article->articleDescription)->en }}</textarea>
+                    <div class="card shadow mb-4" id="englishFields">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">English</h5>
+                </div>
+                <div class="card-body">
+                        <input placeholder="Title" type="text" name="englishTitle" class="form-control mt-3" id="englishTitle" value="{{ json_decode($article->articleTitle)->en }}">
+                        <textarea placeholder="Description" name="englishDescription" class="form-control mt-3" id="englishDescription" rows="6">{{ json_decode($article->articleDescription)->en }}</textarea>
+                        </div>
                     </div>
 
                 </div>
@@ -51,11 +62,12 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const imagePicker = document.getElementById('articleImage');
-        const imagePreview = document.getElementById('image-preview');
-        const toggleButton = document.getElementById('toggleLanguage');
-        const banglaFields = document.getElementById('banglaFields');
-        const englishFields = document.getElementById('englishFields');
+const imagePicker = document.getElementById('articleImage');
+const imagePreview = document.getElementById('image-preview');
+const toggleEnglishBtn = document.getElementById('toggleEnglish');
+const toggleBanglaBtn = document.getElementById('toggleBangla');
+const banglaFields = document.getElementById('banglaFields');
+const englishFields = document.getElementById('englishFields');
         
         imagePicker.addEventListener('change', (event) => {
             const file = event.target.files[0];
@@ -66,15 +78,31 @@
             };
         });
 
-        toggleButton.addEventListener('click', () => {
-            if (banglaFields.style.display === 'none') {
-                banglaFields.style.display = 'block';
-                englishFields.style.display = 'none';
-            } else {
-                banglaFields.style.display = 'none';
-                englishFields.style.display = 'block';
-            }
-        });
+        toggleEnglishBtn.addEventListener('click', () => {
+    toggleLanguage('english');
+});
+
+toggleBanglaBtn.addEventListener('click', () => {
+    toggleLanguage('bangla');
+});
+
+function toggleLanguage(language) {
+    if (language === 'bangla') {
+        banglaFields.style.display = 'block';
+        englishFields.style.display = 'none';
+        toggleBanglaBtn.classList.remove('btn-secondary');
+        toggleBanglaBtn.classList.add('btn-primary');
+        toggleEnglishBtn.classList.remove('btn-primary');
+        toggleEnglishBtn.classList.add('btn-secondary');
+    } else {
+        banglaFields.style.display = 'none';
+        englishFields.style.display = 'block';
+        toggleEnglishBtn.classList.remove('btn-secondary');
+        toggleEnglishBtn.classList.add('btn-primary');
+        toggleBanglaBtn.classList.remove('btn-primary');
+        toggleBanglaBtn.classList.add('btn-secondary');
+    }
+}
     });
 </script>
 @endsection
