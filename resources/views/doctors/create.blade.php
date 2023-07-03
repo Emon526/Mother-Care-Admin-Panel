@@ -18,7 +18,7 @@
                     </div>
 
                     <input placeholder="Doctor ID" type="number" name="doctorId" class="form-control mt-3" id="doctorId"
-                        value="{{$doctoxrsLength}}">
+                        value="{{$doctorsLength}}">
                     <input placeholder="Experience" type="number" name="experience" class="form-control mt-3"
                         id="experience">
                     <input placeholder="Rating" type="number" min="0" max="5" step=0.1 name="rating"
