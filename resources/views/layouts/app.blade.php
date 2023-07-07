@@ -22,7 +22,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('home') }}" style="color: #FF80AB; font-family: Lucida Sans">
+                <a class="navbar-brand" href="{{ url('admin') }}" style="color: #FF80AB; font-family: Lucida Sans">
                     <img src={{ asset('logo.png') }} alt="Logo" style="height: 2rem">
                     {{ config('app.name', 'Laravel') }}
                 </a>
