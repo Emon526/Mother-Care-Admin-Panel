@@ -7,21 +7,21 @@
     "require": {
         "php": "^8.3.9",
         "guzzlehttp/guzzle": "^7.8.1",
-        "jenssegers/mongodb": "^v3.9.5",
-        "laravel/framework": "^v9.52.16",
-        "laravel/sanctum": "^v3.3.3",
-        "laravel/tinker": "^v2.9.0",
-        "laravel/ui": "^v4.5.2",
+        "jenssegers/mongodb": "^3.9.5",
+        "laravel/framework": "^9.52.16",
+        "laravel/sanctum": "^3.3.3",
+        "laravel/tinker": "^2.9.0",
+        "laravel/ui": "^4.5.2",
         "mongodb/mongodb": "^1.19.1"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.9.1",
-        "laravel/pint": "^1.0",
-        "laravel/sail": "^1.0.1",
-        "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^6.1",
-        "phpunit/phpunit": "^9.5.10",
-        "spatie/laravel-ignition": "^1.0"
+        "fakerphp/faker": "^1.23.1",
+        "laravel/pint": "^1.16.1",
+        "laravel/sail": "^1.30.1",
+        "mockery/mockery": "^1.6.12",
+        "nunomaduro/collision": "^8.1.1",
+        "phpunit/phpunit": "^9.6.19",
+        "spatie/laravel-ignition": "^1.7.0"
     },
     "autoload": {
         "psr-4": {
