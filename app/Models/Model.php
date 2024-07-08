@@ -2,8 +2,7 @@
 
 namespace App\Models;
 
-use Jenssegers\Mongodb\Eloquent\Model as BaseModel;
-
+use MongoDB\Laravel\Eloquent\Model as BaseModel;
 class  Model extends BaseModel
 {
 protected $connection = "mongodb";
