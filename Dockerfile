@@ -1,4 +1,4 @@
-FROM php:8.2-cli
+FROM php:8.3.9-cli
 
 # Set environment variable to avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
