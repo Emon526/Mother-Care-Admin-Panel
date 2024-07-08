@@ -7,11 +7,11 @@
     "require": {
         "php": "^8.3.9",
         "guzzlehttp/guzzle": "^7.8.1",
-        "jenssegers/mongodb": "^3.9.5",
-        "laravel/framework": "^9.52.16",
-        "laravel/sanctum": "^3.3.3",
+        "laravel/framework": "^11.14.0",
+        "laravel/sanctum": "^4.0.2",
         "laravel/tinker": "^2.9.0",
         "laravel/ui": "^4.5.2",
+        "mongodb/laravel-mongodb": "^4.5",
         "mongodb/mongodb": "^1.19.1"
     },
     "require-dev": {
@@ -20,8 +20,8 @@
         "laravel/sail": "^1.30.1",
         "mockery/mockery": "^1.6.12",
         "nunomaduro/collision": "^8.1.1",
-        "phpunit/phpunit": "^9.6.19",
-        "spatie/laravel-ignition": "^1.7.0"
+        "phpunit/phpunit": "^11.2.6",
+        "spatie/laravel-ignition": "^2.8.0"
     },
     "autoload": {
         "psr-4": {
