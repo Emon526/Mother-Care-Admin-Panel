@@ -1,4 +1,7 @@
 {
+    "name": "mothercareadminpanel",
+    "version": "2.0.0",
+    "description": "",
     "private": true,
     "scripts": {
         "dev": "vite",
