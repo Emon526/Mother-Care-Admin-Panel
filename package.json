@@ -1,20 +1,20 @@
 {
-    "name": "mothercareadminpanel",
-    "version": "2.0.0",
-    "description": "",
-    "private": true,
-    "scripts": {
-        "dev": "vite",
-        "build": "vite build"
-    },
-    "devDependencies": {
-        "@popperjs/core": "^2.11.8",
-        "axios": "^1.7.2",
-        "bootstrap": "^5.3.3",
-        "laravel-vite-plugin": "^1.0.4",
-        "lodash": "^4.17.21",
-        "postcss": "^8.4.39",
-        "sass": "^1.77.6",
-        "vite": "^5.3.3"
-    }
+  "name": "mothercareadminpanel",
+  "version": "3.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "@popperjs/core": "^2.11.8",
+    "axios": "^1.7.2",
+    "bootstrap": "^5.3.3",
+    "laravel-vite-plugin": "^1.0.4",
+    "lodash": "^4.17.21",
+    "postcss": "^8.4.39",
+    "sass": "^1.77.6",
+    "vite": "^5.3.3"
+  }
 }
