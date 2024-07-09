@@ -1,0 +1,68 @@
+name: Generate Changelog
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  generate-changelog:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+    #   - name: Setup PHP with latest versions
+    #     uses: shivammathur/setup-php@v2
+    #     with:
+    #       php-version: '8.3'
+    #     env:
+    #       update: true # specify true or false
+
+          
+    #   - name: Install Composer Dependencies
+    #     run: composer install --no-scripts --no-progress --no-interaction
+
+    #   - name: Install Node.js
+    #     uses: actions/setup-node@v4
+    #     with:
+    #       node-version: 'latest'
+
+    #   - name: Install npm dependencies
+    #     run: npm ci
+
+      - name: Generate Changelog
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release to Github
+        uses: softprops/action-gh-release@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        with:
+          files: |
+            # build/app/outputs/flutter-apk/*.apk
+            # build/ios/iphoneos/app.ipa
+            # build/macos/Build/Products/Release/yoyo.mac.zip
+            # yy-linux-x86_64.tar.gz
+            # yy-windows.zip
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+
+    #   - name: Generate Changelog
+    #     run: php artisan changelog:generate --unreleased --force
+
+    #   - name: Commit Changelog
+    #     run: |
+    #       git config --local user.email "action@github.com"
+    #       git config --local user.name "GitHub Action"
+    #       git add CHANGELOG.md
+    #       git commit -m "Generate changelog" || true
+    #       git push
+
