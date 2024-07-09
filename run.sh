@@ -51,10 +51,10 @@ export APP_DEBUG=true
 
 # Step 7: Cache Laravel configuration
 echo "Caching Laravel configuration..."
-php artisan config:cache
+php artisan optimize
 
 # Step 8: Run php artisan serve on localhost and port 8000
-echo "Running php artisan serve on http://localhost:8000..."
+echo "Running php artisan serve on http://localhost:8000"
 php artisan serve --host=localhost --port=8000 &
 
 # Keep the script running to keep the server up

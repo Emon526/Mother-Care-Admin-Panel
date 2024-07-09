@@ -48,8 +48,6 @@ RUN chown -R www-data:www-data \
 RUN composer install --no-dev --no-scripts --no-autoloader --ignore-platform-reqs
 RUN composer dump-autoload --optimize
 RUN php artisan optimize
-RUN php artisan config:cache
-RUN php artisan route:cache
 
 # Install Node.js dependencies and build assets
 RUN npm install && npm run build
